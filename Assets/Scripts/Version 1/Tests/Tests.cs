@@ -59,5 +59,13 @@ namespace Version_1.Tests
             var front = back.Rotate(Axis.X, Center).Rotate(Axis.X, Center);
             Assert.AreEqual(Direction.Front.Value, front.Sockets[0].Direction.Value);
         }
+
+        [Test]
+        public void Rotation_May_Change_Position()
+        {
+            var oneUpSegment = CenterCube.Translate(Direction.Up);
+            var oneRightSegment = oneUpSegment.Rotate(Axis.Z, Center);
+            Assert.AreEqual(Direction.Right.Value, oneRightSegment.Positions[0]);
+        }
     }
 }

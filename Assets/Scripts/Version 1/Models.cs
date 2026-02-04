@@ -52,7 +52,6 @@ namespace Version_1
         Z
     }
 
-
     public enum Archetype
     {
         Blue,
