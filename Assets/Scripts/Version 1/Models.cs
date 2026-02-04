@@ -44,23 +44,14 @@ namespace Version_1
         public static IReadOnlyList<Direction> All { get; } =
             new[] { Up, Down, Front, Back, Right, Left };
     }
-
-    public sealed class Angle
+    
+    public enum Axis
     {
-        private Angle(int degrees)
-        {
-            Degrees = degrees;
-        }
-
-        public int Degrees { get; }
-
-        public static readonly Angle Degrees0 = new(0);
-        public static readonly Angle Degrees90 = new(90);
-        public static readonly Angle Degrees180 = new(180);
-        public static readonly Angle Degrees270 = new(270);
+        X,
+        Y,
+        Z
     }
 
-    public record Rotation(Angle X, Angle Y, Angle Z);
 
     public enum Archetype
     {
