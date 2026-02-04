@@ -3,9 +3,16 @@ using System.Linq;
 
 namespace Version_1
 {
-    public sealed class WorldState
+    public sealed class SegmentGrid
     {
         private readonly HashSet<Segment> _segments = new();
+
+        public SegmentGrid(Segment initialSegment)
+        {
+            _segments.Add(initialSegment);
+        }
+        
+        public int Count => _segments.Count;
         
         private IEnumerable<Position> GetOccupiedPositions()
         {
@@ -30,7 +37,7 @@ namespace Version_1
         }
 
         // expects a segment in world position
-        public void AddSegment(Segment segment)
+        public void Add(Segment segment)
         {
             if (!Fits(segment))
                 return;
@@ -56,7 +63,7 @@ namespace Version_1
             {
                 foreach (var other in existingSockets)
                 {
-                    if (Math.Connects(socket, other))
+                    if (socket.ConnectsTo(other))
                         return true;
                 }
             }
