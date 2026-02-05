@@ -12,12 +12,7 @@ namespace Version_1.Tests
             Positions = new[] { Center },
             Sockets = new[]
             {
-                new Socket
-                {
-                    Position = Center,
-                    Direction = Direction.Up,
-                    Archetype = Archetype.Blue
-                }
+                new Socket(Center, Direction.Up, Archetype.Blue)
             }
         };
 
@@ -47,16 +42,16 @@ namespace Version_1.Tests
         {
             var right = CenterCube.Rotate(Axis.Z, Center);
             Assert.AreEqual(Direction.Right.Value, right.Sockets[0].Direction.Value);
-            
+
             var down = right.Rotate(Axis.Z, Center);
             Assert.AreEqual(Direction.Down.Value, down.Sockets[0].Direction.Value);
-            
+
             var left = down.Rotate(Axis.Z, Center);
             Assert.AreEqual(Direction.Left.Value, left.Sockets[0].Direction.Value);
 
             var back = left.Rotate(Axis.Y, Center);
             Assert.AreEqual(Direction.Back.Value, back.Sockets[0].Direction.Value);
-            
+
             var front = back.Rotate(Axis.X, Center).Rotate(Axis.X, Center);
             Assert.AreEqual(Direction.Front.Value, front.Sockets[0].Direction.Value);
         }

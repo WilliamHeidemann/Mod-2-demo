@@ -10,14 +10,9 @@ namespace Version_1
         public IReadOnlyList<Position> Positions { get; init; }
     }
 
-    public sealed class Socket
-    {
-        public Position Position { get; init; }
-        public Direction Direction { get; init; }
-        public Archetype Archetype { get; init; }
-    }
+    public sealed record Socket(Position Position, Direction Direction, Archetype Archetype);
 
-    public record Position(int X, int Y, int Z)
+    public sealed record Position(int X, int Y, int Z)
     {
         public static Position operator +(Position a, Position b) =>
             new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
@@ -44,7 +39,7 @@ namespace Version_1
         public static IReadOnlyList<Direction> All { get; } =
             new[] { Up, Down, Front, Back, Right, Left };
     }
-    
+
     public enum Axis
     {
         X,

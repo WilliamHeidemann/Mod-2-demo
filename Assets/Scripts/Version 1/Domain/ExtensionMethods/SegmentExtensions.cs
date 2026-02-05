@@ -18,12 +18,10 @@ namespace Version_1
             {
                 var socket = segment.Sockets[i];
 
-                sockets[i] = new Socket
-                {
-                    Position = socket.Position.RotateAround(pivot, axis),
-                    Direction = socket.Direction.Rotate(axis),
-                    Archetype = socket.Archetype
-                };
+                sockets[i] = new Socket(
+                    socket.Position.RotateAround(pivot, axis), 
+                    socket.Direction.Rotate(axis),
+                    socket.Archetype);
             }
 
             return new Segment
@@ -45,12 +43,10 @@ namespace Version_1
 
             for (int i = 0; i < sockets.Length; i++)
             {
-                sockets[i] = new Socket
-                {
-                    Position = segment.Sockets[i].Position + translation,
-                    Direction = segment.Sockets[i].Direction,
-                    Archetype = segment.Sockets[i].Archetype,
-                };
+                sockets[i] = new Socket(
+                    segment.Sockets[i].Position + translation,
+                    segment.Sockets[i].Direction,
+                    segment.Sockets[i].Archetype);
             }
 
             return new Segment
