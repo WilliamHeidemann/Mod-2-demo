@@ -24,7 +24,8 @@ namespace Version_1.Tests
         [Test]
         public void Same_Segment_Cannot_Be_Added_Twice()
         {
-            var segmentGrid = new SegmentGrid(CenterCube);
+            var segmentGrid = new SegmentGrid();
+            segmentGrid.Add(CenterCube, forceAdd: true);
             Assert.AreEqual(1, segmentGrid.Count);
 
             segmentGrid.Add(CenterCube);

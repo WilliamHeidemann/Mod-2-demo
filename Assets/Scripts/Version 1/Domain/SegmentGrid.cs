@@ -6,11 +6,6 @@ namespace Version_1
     public sealed class SegmentGrid
     {
         private readonly HashSet<Segment> _segments = new();
-
-        public SegmentGrid(Segment initialSegment)
-        {
-            _segments.Add(initialSegment);
-        }
         
         public int Count => _segments.Count;
         
@@ -37,9 +32,9 @@ namespace Version_1
         }
 
         // expects a segment in world position
-        public void Add(Segment segment)
+        public void Add(Segment segment, bool forceAdd = false)
         {
-            if (!Fits(segment))
+            if (!Fits(segment) && !forceAdd)
                 return;
             
             _segments.Add(segment);

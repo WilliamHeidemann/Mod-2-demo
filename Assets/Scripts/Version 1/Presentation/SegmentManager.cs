@@ -10,8 +10,9 @@ namespace Version_1.Presentation
 
         private void Awake()
         {
+            _segmentGrid = new SegmentGrid();
             var startingSegment = monoSegment.Model;
-            _segmentGrid = new SegmentGrid(startingSegment);
+            _segmentGrid.Add(startingSegment, forceAdd: true);
             Instantiate(monoSegment);
         }
     }
