@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Version_1.Presentation
 {
@@ -7,7 +8,7 @@ namespace Version_1.Presentation
     {
         private Camera _camera;
         [SerializeField] private SegmentManager segmentManager;
-
+        
         private void Awake()
         {
             _camera = Camera.main;
@@ -15,11 +16,20 @@ namespace Version_1.Presentation
         
         private void LateUpdate()
         {
-            if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out var hit))
+            var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            
+            if (Physics.Raycast(ray, out var hit))
             {
-                // transform collider center to position
-                // ask manager to try and validate and build at position 
+                var position = ToPosition(hit.collider.bounds.center); 
+
+                if (Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    segmentManager.TryBuild(position);
+                }
             }
         }
+
+        private Position ToPosition(Vector3 position) => 
+            new(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), Mathf.RoundToInt(position.z));
     }
 }

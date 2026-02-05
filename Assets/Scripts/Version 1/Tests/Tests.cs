@@ -63,5 +63,17 @@ namespace Version_1.Tests
             var oneRightSegment = oneUpSegment.Rotate(Axis.Z, Center);
             Assert.AreEqual(Direction.Right.Value, oneRightSegment.Positions[0]);
         }
+
+        [Test]
+        public void Translate_1_000_000_Times()
+        {
+            var segment = CenterCube;
+            for (int i = 0; i < 1_000_000; i++)
+            {
+                segment = segment.Translate(Direction.Up);
+            }
+            
+            Assert.AreEqual(1_000_000, segment.Positions[0].Y);
+        }
     }
 }

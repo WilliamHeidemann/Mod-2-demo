@@ -40,18 +40,18 @@ namespace Version_1
             new[] { Up, Down, Front, Back, Right, Left };
     }
 
-    public enum Axis
-    {
-        X,
-        Y,
-        Z
-    }
-
     public enum Archetype
     {
         Blue,
         Red,
         Green,
         Yellow,
+    }
+    
+    public enum Axis
+    {
+        X,
+        Y,
+        Z
     }
 }
