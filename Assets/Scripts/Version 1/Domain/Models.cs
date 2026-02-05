@@ -1,13 +1,14 @@
 //-nullable:enable
 
+using System;
 using System.Collections.Generic;
 
 namespace Version_1
 {
     public sealed class Segment
     {
-        public IReadOnlyList<Socket> Sockets { get; init; }
-        public IReadOnlyList<Position> Positions { get; init; }
+        public Socket[] Sockets { get; init; }
+        public Position[] Positions { get; init; }
     }
 
     public sealed record Socket(Position Position, Direction Direction, Archetype Archetype);

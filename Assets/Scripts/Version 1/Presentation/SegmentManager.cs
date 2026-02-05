@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Version_1.Presentation
@@ -27,6 +28,36 @@ namespace Version_1.Presentation
             else
             {
                 print($"Failed to build segment {position}!");
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_segmentGrid == null) return;
+            
+            var occupiedPositions = _segmentGrid.GetOccupiedPositions().ToHashSet();
+            foreach (var socket in _segmentGrid.GetSockets())
+            {
+                var connectingPosition = socket.Position + socket.Direction;
+                if (!occupiedPositions.Contains(connectingPosition))
+                {
+                    var segment = monoSegment.Model.Translate(connectingPosition);
+                    if (_segmentGrid.Fits(segment))
+                    {
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one);
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.red;
+                        Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one);
+                    }
+                }
+                else
+                {
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one);
+                }
             }
         }
     }

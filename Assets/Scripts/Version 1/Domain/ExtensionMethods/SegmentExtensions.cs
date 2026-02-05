@@ -6,8 +6,8 @@ namespace Version_1
     {
         public static Segment Rotate(this Segment segment, Axis axis, Position pivot)
         {
-            var positions = new Position[segment.Positions.Count];
-            var sockets = new Socket[segment.Sockets.Count];
+            var positions = new Position[segment.Positions.Length];
+            var sockets = new Socket[segment.Sockets.Length];
 
             for (int i = 0; i < positions.Length; i++)
             {
@@ -33,8 +33,8 @@ namespace Version_1
 
         public static Segment Translate(this Segment segment, Position translation)
         {
-            var positions = new Position[segment.Positions.Count];
-            var sockets = new Socket[segment.Sockets.Count];
+            var positions = new Position[segment.Positions.Length];
+            var sockets = new Socket[segment.Sockets.Length];
 
             for (var i = 0; i < positions.Length; i++)
             {

@@ -10,7 +10,7 @@ namespace Version_1
 
         public int Count => _segments.Count;
 
-        private IEnumerable<Position> GetOccupiedPositions()
+        public IEnumerable<Position> GetOccupiedPositions()
         {
             foreach (var segment in _segments)
             {
@@ -21,7 +21,7 @@ namespace Version_1
             }
         }
 
-        private IEnumerable<Socket> GetSockets()
+        public IEnumerable<Socket> GetSockets()
         {
             foreach (var segment in _segments)
             {
@@ -50,7 +50,7 @@ namespace Version_1
             {
                 if (occupiedPositions.Contains(position))
                 {
-                    Debug.LogWarning($"Segment has already been occupied by {position}");
+                    // Debug.LogWarning($"Segment has already been occupied by {position}");
                     return false;
                 }
             }
@@ -66,7 +66,7 @@ namespace Version_1
                 }
             }
             
-            Debug.LogWarning($"No sockets found for {segment}");
+            // Debug.LogWarning($"No sockets found for {segment}");
             return false;
         }
     }

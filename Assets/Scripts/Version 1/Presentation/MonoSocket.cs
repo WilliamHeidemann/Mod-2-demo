@@ -6,10 +6,10 @@ using Version_1.Presentation;
 public class MonoSocket : MonoBehaviour
 {
     public Archetype archetype;
-
+    [SerializeField] private BoxCollider boxCollider;
+    
     private void Awake()
     {
-        var boxCollider = gameObject.AddComponent<BoxCollider>();
         boxCollider.center = transform.InverseTransformPoint(transform.position + transform.forward);
     }
 
