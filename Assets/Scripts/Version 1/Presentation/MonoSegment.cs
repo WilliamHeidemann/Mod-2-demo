@@ -42,8 +42,8 @@ namespace Version_1.Presentation
             for (var i = 0; i < monoSockets.Length; i++)
             {
                 var monoSocket = monoSockets[i];
-                sockets[i] = new Socket(monoSocket.transform.position.ToPosition(),
-                    monoSocket.transform.forward.ToPosition().AsDirection(), monoSocket.archetype);
+                sockets[i] = new Socket(monoSocket.transform.position.ToPosition(), 
+                    monoSocket.Direction, monoSocket.Archetype);
             }
 
             return sockets;

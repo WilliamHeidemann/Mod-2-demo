@@ -7,7 +7,7 @@ namespace Version_1.Presentation
     public class RayCaster : MonoSegment
     {
         private Camera _camera;
-        [SerializeField] private SegmentManager segmentManager;
+        [SerializeField] private SegmentManager _segmentManager;
         
         private void Awake()
         {
@@ -24,7 +24,7 @@ namespace Version_1.Presentation
 
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
-                    segmentManager.TryBuild(position);
+                    _segmentManager.TryBuild(position);
                 }
             }
         }
