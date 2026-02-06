@@ -8,6 +8,8 @@ namespace Version_1.Presentation
     public class SegmentManager : MonoBehaviour
     {
         [SerializeField] private MonoSegment _monoSegment;
+        [SerializeField] private SegmentGenerator _generator;
+        
         private SegmentGrid _segmentGrid;
 
         private Option<(MonoSegment, Position)> _hoverMonoSegment;
@@ -15,18 +17,26 @@ namespace Version_1.Presentation
         private void Start()
         {
             _segmentGrid = new SegmentGrid();
-            var startingSegment = _monoSegment.Model;
-            _segmentGrid.Add(startingSegment, forceAdd: true);
-            Instantiate(_monoSegment);
+            var startingSegment = _generator.GenerateAndInstantiate();
+            _segmentGrid.Add(startingSegment.Model, forceAdd: true);
+            startingSegment.EnableColliders();
         }
 
         public void TryBuild(Position position)
         {
-            var segment = _monoSegment.Model.Translate(position);
+            if (!_hoverMonoSegment.IsSome(out (MonoSegment monoSegment, Position position) tuple))
+            {
+                throw new Exception($"Player is not hovering");
+            }
+            
+            Segment segment = tuple.monoSegment.Model;
             if (_segmentGrid.Fits(segment))
             {
                 _segmentGrid.Add(segment);
-                Instantiate(_monoSegment, position.ToVector3(), Quaternion.identity);
+                MonoSegment monoSegment = Instantiate(tuple.monoSegment, position.ToVector3(), Quaternion.identity);
+                monoSegment.EnableColliders();
+                
+                SocketUnHovered();
             }
             else
             {

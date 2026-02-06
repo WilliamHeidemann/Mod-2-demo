@@ -1,21 +1,29 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UtilityToolkit.Runtime;
-using Version_1.Utility;
 
 namespace Version_1.Presentation
 {
     public class MonoSegment : MonoBehaviour
     {
         private Option<Segment> _model;
+        private MonoSocket[] _sockets;
         public Segment Model => _model.IsSome(out var segment) ? segment : ReadSegment();
+
+        public void EnableColliders()
+        {
+            if (_sockets == null) _sockets = GetComponentsInChildren<MonoSocket>();
+            
+            foreach (var socket in _sockets)
+            {
+                socket.EnableCollider();
+            }
+        }
 
         private Segment ReadSegment()
         {
-            var sockets = ReadSockets();
-            var positions = ReadPositions();
+            Socket[] sockets = ReadSockets();
+            Position[] positions = ReadPositions();
 
             return new Segment
             {
@@ -26,8 +34,8 @@ namespace Version_1.Presentation
 
         private Position[] ReadPositions()
         {
-            var cells = GetComponentsInChildren<Cell>();
-            var positions = new Position[cells.Length];
+            Cell[] cells = GetComponentsInChildren<Cell>();
+            Position[] positions = new Position[cells.Length];
             for (int i = 0; i < positions.Length; i++)
             {
                 positions[i] = cells[i].transform.position.ToPosition();
@@ -39,6 +47,7 @@ namespace Version_1.Presentation
         private Socket[] ReadSockets()
         {
             var monoSockets = GetComponentsInChildren<MonoSocket>();
+            _sockets = monoSockets;
             var sockets = new Socket[monoSockets.Length];
             for (var i = 0; i < monoSockets.Length; i++)
             {
