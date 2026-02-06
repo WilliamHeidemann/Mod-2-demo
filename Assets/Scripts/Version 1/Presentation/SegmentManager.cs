@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UtilityToolkit.Runtime;
 
 namespace Version_1.Presentation
 {
@@ -8,7 +9,9 @@ namespace Version_1.Presentation
     {
         [SerializeField] private MonoSegment _monoSegment;
         private SegmentGrid _segmentGrid;
-        
+
+        private Option<(MonoSegment, Position)> _hoverMonoSegment;
+
         private void Start()
         {
             _segmentGrid = new SegmentGrid();
@@ -31,10 +34,44 @@ namespace Version_1.Presentation
             }
         }
 
+        public void SocketHovered(Position position)
+        {
+            if (_hoverMonoSegment.IsSome(out (MonoSegment segment, Position position) tuple))
+            {
+                if (position == tuple.position)
+                {
+                    return;
+                }
+
+                SocketUnHovered();
+            }
+
+            Segment originSegment = _monoSegment.Model.Translate(position);
+            foreach (Socket socket in originSegment.Sockets)
+            {
+                Segment segment = _monoSegment.Model.Translate(socket.Position);
+                if (_segmentGrid.Fits(segment))
+                {
+                    MonoSegment hover = Instantiate(_monoSegment, socket.Position.ToVector3(), Quaternion.identity);
+                    _hoverMonoSegment = Option<(MonoSegment, Position)>.Some((hover, position));
+                    return;
+                }
+            }
+        }
+
+        public void SocketUnHovered()
+        {
+            if (_hoverMonoSegment.IsSome(out (MonoSegment segment, Position position) tuple))
+            {
+                Destroy(tuple.segment.gameObject);
+                _hoverMonoSegment = Option<(MonoSegment, Position)>.None;
+            }
+        }
+
         private void OnDrawGizmos()
         {
             if (_segmentGrid == null) return;
-            
+
             var occupiedPositions = _segmentGrid.GetOccupiedPositions().ToHashSet();
             foreach (var socket in _segmentGrid.GetSockets())
             {
@@ -45,18 +82,18 @@ namespace Version_1.Presentation
                     if (_segmentGrid.Fits(segment))
                     {
                         Gizmos.color = Color.green;
-                        Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one);
+                        Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one * 0.9f);
                     }
                     else
                     {
                         Gizmos.color = Color.red;
-                        Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one);
+                        Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one * 0.9f);
                     }
                 }
                 else
                 {
                     Gizmos.color = Color.yellow;
-                    Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one);
+                    Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one * 0.9f);
                 }
             }
         }

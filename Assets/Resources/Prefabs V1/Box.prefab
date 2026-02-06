@@ -156,6 +156,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86af556feba14a1d86208f98a9ca2823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Presentation::Version_1.Presentation.MonoSegment
+  _serializedDictionary:
+    _values:
+    - Key: Hello
+      Value: 0
+    - Key: World
+      Value: 1
 --- !u!1 &5404928520202319066
 GameObject:
   m_ObjectHideFlags: 0

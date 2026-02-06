@@ -17,6 +17,8 @@ namespace Version_1
     {
         public static Position operator +(Position a, Position b) =>
             new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+        public static Position operator -(Position a, Position b) =>
+            new(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
     }
 
     public sealed class Direction

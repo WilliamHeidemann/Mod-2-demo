@@ -20,12 +20,17 @@ namespace Version_1.Presentation
             
             if (Physics.Raycast(ray, out var hit))
             {
-                var position = ToPosition(hit.collider.bounds.center); 
+                var position = ToPosition(hit.collider.bounds.center);
+                _segmentManager.SocketHovered(position);
 
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
                     _segmentManager.TryBuild(position);
                 }
+            }
+            else
+            {
+                _segmentManager.SocketUnHovered();
             }
         }
 
