@@ -7,10 +7,28 @@ namespace Version_1.Domain
 {
     public static class Generator
     {
+        public static Segment GenerateBox()
+        {
+            var center = new Position(0, 0, 0);
+            return new Segment
+            {
+                Positions = new[] { new Position(0, 0, 0) },
+                Sockets = new Socket[]
+                {
+                    new(center, Direction.Up,  Archetype.Blue),
+                    new(center, Direction.Down,  Archetype.Blue),
+                    new(center, Direction.Right,  Archetype.Blue),
+                    new(center, Direction.Left,  Archetype.Blue),
+                    new(center, Direction.Front,  Archetype.Blue),
+                    new(center, Direction.Back,  Archetype.Blue),
+                },
+            };
+        }
+        
         public static Segment Generate()
         {
             HashSet<Position> positions = new();
-            Position current = new Position(0, 0, 0);
+            Position current = new(0, 0, 0);
 
             positions.Add(current);
             var numberOfCells = Random.Range(1, 6);
@@ -28,7 +46,7 @@ namespace Version_1.Domain
                 }
             }
 
-            int numberOfSockets = Random.Range(2, 4);
+            int numberOfSockets = Random.Range(5, 10);
             List<Socket> sockets = new();
             for (int i = 0; i < numberOfSockets; i++)
             {

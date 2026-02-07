@@ -8,8 +8,9 @@ namespace Version_1.Presentation
     {
         private Option<Segment> _model;
         private MonoSocket[] _sockets;
-        public Segment Model => _model.IsSome(out var segment) ? segment : ReadSegment();
-
+        // public Segment Model => _model.IsSome(out var segment) ? segment : ReadSegment();
+        public Segment Model => ReadSegment();
+        
         public void EnableColliders()
         {
             if (_sockets == null) _sockets = GetComponentsInChildren<MonoSocket>();

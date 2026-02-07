@@ -1,42 +1,65 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UtilityToolkit.Runtime;
+using Version_1.Domain;
 
 namespace Version_1.Presentation
 {
     public class SegmentManager : MonoBehaviour
     {
-        [SerializeField] private MonoSegment _monoSegment;
-        [SerializeField] private SegmentGenerator _generator;
-        
+        [SerializeField] private SegmentInstantiator _instantiator;
+
         private SegmentGrid _segmentGrid;
-
-        private Option<(MonoSegment, Position)> _hoverMonoSegment;
-
+        private Segment _segment;
+        private MonoSegment _segmentPresentation;
+        private Quaternion _rotation = Quaternion.identity;
+        private Position _translation = new(0, 0, 0);
+        
         private void Start()
         {
             _segmentGrid = new SegmentGrid();
-            var startingSegment = _generator.GenerateAndInstantiate();
-            _segmentGrid.Add(startingSegment.Model, forceAdd: true);
-            startingSegment.EnableColliders();
+
+            _segment = Generator.Generate();
+            _segmentPresentation = _instantiator.Instantiate(_segment);
+            _segmentGrid.Add(_segment, forceAdd: true);
+            _segmentPresentation.EnableColliders();
+            
+            _segment = Generator.Generate();
+            _segmentPresentation = _instantiator.Instantiate(_segment);
+            _segmentPresentation.gameObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (Keyboard.current.qKey.wasPressedThisFrame)
+            {
+                Rotate(Vector3.right);
+            }
+
+            if (Keyboard.current.eKey.wasPressedThisFrame)
+            {
+                Rotate(Vector3.forward);
+            }
+        }
+
+        private void Rotate(Vector3 axis)
+        {
+            _rotation *= Quaternion.AngleAxis(90f, axis);
         }
 
         public void TryBuild(Position position)
         {
-            if (!_hoverMonoSegment.IsSome(out (MonoSegment monoSegment, Position position) tuple))
-            {
-                throw new Exception($"Player is not hovering");
-            }
-            
-            Segment segment = tuple.monoSegment.Model;
+            Segment segment = _segment.Translate(_translation);
             if (_segmentGrid.Fits(segment))
             {
                 _segmentGrid.Add(segment);
-                MonoSegment monoSegment = Instantiate(tuple.monoSegment, position.ToVector3(), Quaternion.identity);
-                monoSegment.EnableColliders();
+                _segmentPresentation.EnableColliders();
                 
-                SocketUnHovered();
+                _segment = Generator.Generate();
+                _segmentPresentation = _instantiator.Instantiate(_segment);
+                _segmentPresentation.gameObject.SetActive(false);
             }
             else
             {
@@ -46,36 +69,26 @@ namespace Version_1.Presentation
 
         public void SocketHovered(Position position)
         {
-            if (_hoverMonoSegment.IsSome(out (MonoSegment segment, Position position) tuple))
-            {
-                if (position == tuple.position)
-                {
-                    return;
-                }
+            _segmentPresentation.gameObject.SetActive(true);
 
-                SocketUnHovered();
-            }
-
-            Segment originSegment = _monoSegment.Model.Translate(position);
-            foreach (Socket socket in originSegment.Sockets)
+            Segment segmentAtHoverPosition = _segment.Translate(position);
+            foreach (Socket hoverPositionSocket in segmentAtHoverPosition.Sockets)
             {
-                Segment segment = _monoSegment.Model.Translate(socket.Position);
-                if (_segmentGrid.Fits(segment))
+                Segment segmentAtSocketPosition = _segment.Translate(hoverPositionSocket.Position);
+                if (_segmentGrid.Fits(segmentAtSocketPosition))
                 {
-                    MonoSegment hover = Instantiate(_monoSegment, socket.Position.ToVector3(), Quaternion.identity);
-                    _hoverMonoSegment = Option<(MonoSegment, Position)>.Some((hover, position));
+                    _translation = hoverPositionSocket.Position;
+                    _segmentPresentation.transform.position = hoverPositionSocket.Position.ToVector3();
                     return;
                 }
             }
+            
+            _segmentPresentation.gameObject.SetActive(false);
         }
 
         public void SocketUnHovered()
         {
-            if (_hoverMonoSegment.IsSome(out (MonoSegment segment, Position position) tuple))
-            {
-                Destroy(tuple.segment.gameObject);
-                _hoverMonoSegment = Option<(MonoSegment, Position)>.None;
-            }
+            _segmentPresentation.gameObject.SetActive(false);
         }
 
         private void OnDrawGizmos()
@@ -88,22 +101,22 @@ namespace Version_1.Presentation
                 var connectingPosition = socket.Position + socket.Direction;
                 if (!occupiedPositions.Contains(connectingPosition))
                 {
-                    var segment = _monoSegment.Model.Translate(connectingPosition);
+                    var segment = _segment.Translate(connectingPosition);
                     if (_segmentGrid.Fits(segment))
                     {
                         Gizmos.color = Color.green;
-                        Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one * 0.9f);
+                        Gizmos.DrawSphere(connectingPosition.ToVector3(), 0.3f);
                     }
                     else
                     {
                         Gizmos.color = Color.red;
-                        Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one * 0.9f);
+                        Gizmos.DrawSphere(connectingPosition.ToVector3(), 0.3f);
                     }
                 }
                 else
                 {
                     Gizmos.color = Color.yellow;
-                    Gizmos.DrawWireCube(connectingPosition.ToVector3(), Vector3.one * 0.9f);
+                    Gizmos.DrawSphere(connectingPosition.ToVector3(), 0.3f);
                 }
             }
         }

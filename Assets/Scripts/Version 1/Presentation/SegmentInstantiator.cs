@@ -1,27 +1,26 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UtilityToolkit.Runtime;
-using Version_1.Domain;
 
 namespace Version_1.Presentation
 {
-    public class SegmentGenerator : MonoBehaviour
+    [CreateAssetMenu(menuName = "SegmentInstantiator")]
+    public class SegmentInstantiator : ScriptableObject
     {
-        [SerializeField] private GameObject _boxPrefab;
+        [SerializeField] private GameObject _cellRenderPrefab;
         [SerializeField] private Cell _cell;
         [SerializeField] private MonoSocket _monoSocket;
         [SerializeField] private Material[] _materials;
 
-        public MonoSegment GenerateAndInstantiate()
+        public MonoSegment Instantiate(Segment segment)
         {
-            Segment segment = Generator.Generate();
-            
             MonoSegment monoSegment = new GameObject().AddComponent<MonoSegment>();
 
             var material = _materials.RandomElement();
             foreach (var position in segment.Positions)
             {
                 Instantiate(_cell, position.ToVector3(), Quaternion.identity, monoSegment.transform);
-                var box = Instantiate(_boxPrefab, position.ToVector3(), Quaternion.identity, monoSegment.transform);
+                var box = Instantiate(_cellRenderPrefab, position.ToVector3(), Quaternion.identity, monoSegment.transform);
                 box.GetComponent<MeshRenderer>().material = material;
             }
 

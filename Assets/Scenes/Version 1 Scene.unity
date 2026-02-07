@@ -311,7 +311,6 @@ GameObject:
   m_Component:
   - component: {fileID: 417548656}
   - component: {fileID: 417548655}
-  - component: {fileID: 417548657}
   m_Layer: 0
   m_Name: Segment Manager
   m_TagString: Untagged
@@ -332,7 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Presentation::Version_1.Presentation.SegmentManager
   _monoSegment: {fileID: 6196442274671273055, guid: 451de68f4884a4caabac1bf588fbb7a9, type: 3}
-  _generator: {fileID: 417548657}
+  _instantiator: {fileID: 11400000, guid: 04a37db7cb359450d950303ec412b542, type: 2}
 --- !u!4 &417548656
 Transform:
   m_ObjectHideFlags: 0
@@ -348,26 +347,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &417548657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417548654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a1b2101e08449f6b711ed0332926645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Presentation::Version_1.Presentation.SegmentGenerator
-  _boxPrefab: {fileID: 7305238983712239121, guid: 0df3e14a8fe024bbc87b553fe8d22cc2, type: 3}
-  _cell: {fileID: 6122531388560016238, guid: 5d8988a6b52ad4c9ab0d5e78e9d505ba, type: 3}
-  _monoSocket: {fileID: 7884140667758003121, guid: a4b791b76934148c687e343d03b1a209, type: 3}
-  _materials:
-  - {fileID: 2100000, guid: c8bb4bcafa88d48ef8a7567263521b50, type: 2}
-  - {fileID: 2100000, guid: 9b9489c1628a6450786ccf4b7728f299, type: 2}
-  - {fileID: 2100000, guid: 20b70afa3b6bb48e9896fe56509d246b, type: 2}
-  - {fileID: 2100000, guid: 8151c1facaee54ecaadd16a0775fd0bd, type: 2}
 --- !u!1 &541654336
 GameObject:
   m_ObjectHideFlags: 0
