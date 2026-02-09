@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using Version_1.Utility;
 
 namespace Version_1
 {
@@ -30,5 +33,17 @@ namespace Version_1
                 rotated.Y + pivot.Y,
                 rotated.Z + pivot.Z);
         }
+
+        public static bool IsNextTo(this Position a, Position b)
+        {
+            return
+                Mathf.Abs(a.X - b.X)
+                + Mathf.Abs(a.Y - b.Y)
+                + Mathf.Abs(a.Z - b.Z)
+                == 1;
+        }
+
+        public static IEnumerable<(Position First, Position Second)> PairsOfNeighbors(this IEnumerable<Position> positions) =>
+            positions.Pairs((a, b) => a.IsNextTo(b));
     }
 }

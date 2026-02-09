@@ -53,5 +53,19 @@ namespace Version_1.Presentation
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
         }
+
+        public static Axis ToAxis(this Vector3 axis)
+        {
+            return axis switch
+            {
+                _ when axis == Vector3.forward => Axis.Z,
+                _ when axis == Vector3.back => Axis.Z,
+                _ when axis == Vector3.up => Axis.Y,
+                _ when axis == Vector3.down => Axis.Y,
+                _ when axis == Vector3.left => Axis.X,
+                _ when axis == Vector3.right => Axis.X,
+                _ => throw new ArgumentOutOfRangeException(nameof(axis), axis, null)
+            };
+        }
     }
 }

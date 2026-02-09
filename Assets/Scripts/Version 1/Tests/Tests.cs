@@ -5,14 +5,12 @@ namespace Version_1.Tests
     [TestFixture]
     public class Tests
     {
-        private static Position Center => new(0, 0, 0);
-
         private static Segment CenterCube => new()
         {
-            Positions = new[] { Center },
+            Positions = new[] { Position.Center },
             Sockets = new[]
             {
-                new Socket(Center, Direction.Up, Archetype.Blue)
+                new Socket(Position.Center, Direction.Up, Archetype.Blue)
             }
         };
 
@@ -40,19 +38,19 @@ namespace Version_1.Tests
         [Test]
         public void Can_Rotate_Segment_Around()
         {
-            var right = CenterCube.Rotate(Axis.Z, Center);
+            var right = CenterCube.Rotate(Axis.Z, Position.Center);
             Assert.AreEqual(Direction.Right.Value, right.Sockets[0].Direction.Value);
 
-            var down = right.Rotate(Axis.Z, Center);
+            var down = right.Rotate(Axis.Z, Position.Center);
             Assert.AreEqual(Direction.Down.Value, down.Sockets[0].Direction.Value);
 
-            var left = down.Rotate(Axis.Z, Center);
+            var left = down.Rotate(Axis.Z, Position.Center);
             Assert.AreEqual(Direction.Left.Value, left.Sockets[0].Direction.Value);
 
-            var back = left.Rotate(Axis.Y, Center);
+            var back = left.Rotate(Axis.Y, Position.Center);
             Assert.AreEqual(Direction.Back.Value, back.Sockets[0].Direction.Value);
 
-            var front = back.Rotate(Axis.X, Center).Rotate(Axis.X, Center);
+            var front = back.Rotate(Axis.X, Position.Center).Rotate(Axis.X, Position.Center);
             Assert.AreEqual(Direction.Front.Value, front.Sockets[0].Direction.Value);
         }
 
@@ -60,7 +58,7 @@ namespace Version_1.Tests
         public void Rotation_May_Change_Position()
         {
             var oneUpSegment = CenterCube.Translate(Direction.Up);
-            var oneRightSegment = oneUpSegment.Rotate(Axis.Z, Center);
+            var oneRightSegment = oneUpSegment.Rotate(Axis.Z, Position.Center);
             Assert.AreEqual(Direction.Right.Value, oneRightSegment.Positions[0]);
         }
 

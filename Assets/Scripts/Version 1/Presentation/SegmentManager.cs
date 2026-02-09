@@ -46,7 +46,10 @@ namespace Version_1.Presentation
 
         private void Rotate(Vector3 axis)
         {
+            _segment = _segment.Rotate(axis.ToAxis(), Position.Center);
             _rotation *= Quaternion.AngleAxis(90f, axis);
+            _segmentPresentation.transform.rotation = _rotation;
+            _segmentPresentation.gameObject.SetActive(_segmentGrid.Fits(_segment));
         }
 
         public void TryBuild(Position position)
@@ -96,7 +99,7 @@ namespace Version_1.Presentation
             if (_segmentGrid == null) return;
 
             var occupiedPositions = _segmentGrid.GetOccupiedPositions().ToHashSet();
-            foreach (var socket in _segmentGrid.GetSockets())
+            foreach (var socket in _segmentGrid.GetSockets().OrderByDescending(s => Vector3.SqrMagnitude((s.Position.ToVector3() + s.Direction.Value.ToVector3()) - Camera.main.transform.position)))
             {
                 var connectingPosition = socket.Position + socket.Direction;
                 if (!occupiedPositions.Contains(connectingPosition))
