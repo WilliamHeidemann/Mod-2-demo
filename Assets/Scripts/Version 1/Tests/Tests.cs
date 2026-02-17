@@ -55,6 +55,16 @@ namespace Version_1.Tests
         }
 
         [Test]
+        public void Can_Rotate_And_Translate_Segment()
+        {
+            var segment = CenterCube.Translate(Direction.Up);
+            Assert.AreEqual(Direction.Up.Value, segment.Positions[0]);
+
+            segment = segment.Translate(Direction.Right * 3);
+            Assert.AreEqual(new Position(3, 1, 0), segment.Positions[0]);
+        }
+
+        [Test]
         public void Rotation_May_Change_Position()
         {
             var oneUpSegment = CenterCube.Translate(Direction.Up);

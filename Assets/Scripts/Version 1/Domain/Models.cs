@@ -34,6 +34,16 @@ namespace Version_1
 
         public static implicit operator Position(Direction direction) => direction.Value;
 
+        public static Position operator *(Direction direction, int multiplier)
+        {
+            Position position = Position.Center;
+            for (int i = 0; i < multiplier; i++)
+            {
+                position += direction;
+            }
+            return position;
+        }
+
         public static readonly Direction Up = new(0, 1, 0);
         public static readonly Direction Down = new(0, -1, 0);
         public static readonly Direction Front = new(0, 0, 1);
