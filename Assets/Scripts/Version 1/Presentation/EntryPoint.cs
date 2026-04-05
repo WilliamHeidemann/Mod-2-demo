@@ -18,7 +18,7 @@ namespace Version_1.Presentation
             _rayCaster.Initialize(interactions);
             Factory factory = new(_factoryData);
             Builder builder = new(interactions, factory);
-            Segment initial = Generator.Generate();
+            Segment initial = Generator.CenterCube;
             builder.Select(initial);
             builder.TryBuild(Position.Center);
         }

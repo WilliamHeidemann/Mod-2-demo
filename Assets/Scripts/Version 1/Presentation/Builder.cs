@@ -32,7 +32,7 @@ namespace Version_1.Presentation
 
         public void TryBuild(Position position)
         {
-            Segment translatedSegment = _current.Translate(position);
+            Segment translatedSegment = _current.MoveTo(position);
             if (_grid.TryAdd(translatedSegment))
             {
                 _ghost.SetActive(true);
@@ -55,7 +55,7 @@ namespace Version_1.Presentation
             
             _ghost.SetActive(true);
             
-            Segment translatedSegment = _current.Translate(position);
+            Segment translatedSegment = _current.MoveTo(position);
             List<Segment> validSegments = translatedSegment.GetAllStates().Where(_grid.Fits).ToList();
             if (validSegments.Count > 0)
             {
@@ -64,10 +64,10 @@ namespace Version_1.Presentation
                 Object.Destroy(_ghost);
                 _ghost = _factory.SegmentToGameObject(validSegment);
                 
-                LMotion
-                    .Create(_ghost.transform.position, position.ToVector3(), .3f)
-                    .WithEase(Ease.OutExpo)
-                    .BindToPosition(_ghost.transform);
+                // LMotion
+                //     .Create(_ghost.transform.position, position.ToVector3(), .3f)
+                //     .WithEase(Ease.OutExpo)
+                //     .BindToPosition(_ghost.transform);
             }
             else
             {

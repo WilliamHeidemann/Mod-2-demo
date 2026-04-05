@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Version_1
 {
@@ -58,6 +59,12 @@ namespace Version_1
                 Pivot = keepPivot ? segment.Pivot : segment.Pivot + translation
             };
         }
+
+        public static Segment MoveTo(this Segment segment, Position position)
+        {
+            Position difference = position - segment.Pivot;
+            return segment.Translate(difference);
+        }
         
         public static IEnumerable<Segment> GetAllStates(this Segment segment)
         {
@@ -65,7 +72,7 @@ namespace Version_1
 
             foreach (Position segmentPosition in segment.Positions)
             {
-                Segment translatedSegment = segment.Translate(-segmentPosition + segment.Pivot, keepPivot: true);
+                Segment translatedSegment = segment.Translate(segment.Pivot - segmentPosition, keepPivot: true);
 
                 foreach (Segment rotatedSegment in translatedSegment.GetStatesInPivot())
                 {
