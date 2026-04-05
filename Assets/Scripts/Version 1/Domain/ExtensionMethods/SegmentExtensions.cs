@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Version_1
+namespace Version_1.Domain.ExtensionMethods
 {
     public static class SegmentExtensions
     {

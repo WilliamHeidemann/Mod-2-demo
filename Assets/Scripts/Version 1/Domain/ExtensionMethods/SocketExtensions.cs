@@ -1,4 +1,4 @@
-namespace Version_1
+namespace Version_1.Domain.ExtensionMethods
 {
     public static class SocketExtensions
     {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Version_1.Domain;
+using Version_1.Domain.ExtensionMethods;
 
 namespace Version_1.Tests
 {

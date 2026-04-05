@@ -1,9 +1,8 @@
 //-nullable:enable
 
-using System;
 using System.Collections.Generic;
 
-namespace Version_1
+namespace Version_1.Domain
 {
     public sealed class Segment
     {

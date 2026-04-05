@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Version_1.Utility;
 
-namespace Version_1
+namespace Version_1.Domain.ExtensionMethods
 {
     public static class PositionExtensions
     {

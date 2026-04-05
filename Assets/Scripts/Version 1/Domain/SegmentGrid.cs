@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Version_1.Domain.ExtensionMethods;
 
-namespace Version_1
+namespace Version_1.Domain
 {
     public sealed class SegmentGrid
     {

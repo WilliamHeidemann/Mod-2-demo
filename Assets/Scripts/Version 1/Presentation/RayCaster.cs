@@ -1,6 +1,6 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Version_1.Domain;
 
 namespace Version_1.Presentation
 {

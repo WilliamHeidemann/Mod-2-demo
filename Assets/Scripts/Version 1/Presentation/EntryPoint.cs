@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Version_1.Domain;
 
