@@ -61,6 +61,12 @@ namespace Version_1.Domain.ExtensionMethods
         public static Segment MoveTo(this Segment segment, Position position)
         {
             Position difference = position - segment.Pivot;
+
+            if (difference.Equals(Position.Center))
+            {
+                return segment;
+            }
+            
             return segment.Translate(difference);
         }
         

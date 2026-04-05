@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Version_1.Domain;
 using Version_1.Domain.ExtensionMethods;
@@ -8,15 +9,15 @@ namespace Version_1.Presentation
     {
         private readonly GameObject _cube;
         private readonly GameObject _socket;
-        private readonly Material _material;
         private readonly MonoSocket _monoSocket;
+        private readonly Dictionary<Archetype, Material> _materials;
 
         public Factory(SegmentFactoryData data)
         {
             _cube = data.Cube;
             _socket = data.Socket;
-            _material = data.Material;
             _monoSocket = data.MonoSocket;
+            _materials = data.Materials.Build();
         }
         
         public GameObject SegmentToGameObject(Segment segment)
@@ -38,7 +39,7 @@ namespace Version_1.Presentation
             {
                 Quaternion rotation = Quaternion.LookRotation(socket.Direction.Value.ToVector3());
                 GameObject socketRender = Object.Instantiate(_socket, socket.Position.ToVector3(), rotation, gameObject.transform);
-                socketRender.GetComponentInChildren<MeshRenderer>().material = _material;
+                socketRender.GetComponentInChildren<MeshRenderer>().material = _materials[socket.Archetype];
             }
 
             return gameObject;

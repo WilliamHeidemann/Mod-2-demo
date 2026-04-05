@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UtilityToolkit.Runtime;
+using Random = UnityEngine.Random;
 
 namespace Version_1.Domain
 {
@@ -57,7 +58,8 @@ namespace Version_1.Domain
                 Direction direction = Direction.All.RandomElement();
                 if (!positions.Contains(cell + direction))
                 {
-                    Socket socket = new Socket(cell, direction, Archetype.Blue);
+                    Archetype archetype = Enum.GetValues(typeof(Archetype)).Cast<Archetype>().RandomElement();
+                    Socket socket = new Socket(cell, direction, archetype);
                     sockets.Add(socket);
                 }
                 else

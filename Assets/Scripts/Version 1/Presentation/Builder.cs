@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Version_1.Domain;
 using Version_1.Domain.ExtensionMethods;
+using Position = Version_1.Domain.Position;
 
 namespace Version_1.Presentation
 {
@@ -11,6 +15,8 @@ namespace Version_1.Presentation
         private readonly Factory _factory;
         private readonly SegmentGrid _grid = new();
         private Segment _current;
+        private Segment[] _validSegmentStates;
+        private int _stateIndex;
         private GameObject _ghost;
         
         public Builder(Interactions interactions, Factory factory)
@@ -20,6 +26,7 @@ namespace Version_1.Presentation
             interactions.OnHoverEnter += SetHover;
             interactions.OnHoverExit += RemoveHover;
             interactions.OnTryBuild += TryBuild;
+            interactions.OnRotate += Rotate;
         }
 
         public void Select(Segment segment)
@@ -55,11 +62,13 @@ namespace Version_1.Presentation
             _ghost.SetActive(true);
             
             Segment translatedSegment = _current.MoveTo(position);
-            List<Segment> validSegments = translatedSegment.GetAllStates().Where(_grid.Fits).ToList();
-            if (validSegments.Count > 0)
+            Segment[] validSegments = translatedSegment.GetAllStates().Where(_grid.Fits).ToArray();
+            if (validSegments.Length > 0)
             {
                 Segment validSegment = validSegments[0];
-                _current = validSegment;//.Translate(-position);
+                _validSegmentStates = validSegments;
+                _stateIndex = 0;
+                _current = validSegment;
                 Object.Destroy(_ghost);
                 _ghost = _factory.SegmentToGameObject(validSegment);
                 
@@ -82,6 +91,19 @@ namespace Version_1.Presentation
             }
             
             // _ghost.SetActive(false);
+        }
+        
+        private void Rotate()
+        {
+            if (_validSegmentStates == null || 0 == _validSegmentStates.Length)
+            {
+                return;
+            }
+            
+            _stateIndex = (_stateIndex + 1) % _validSegmentStates.Length;
+            _current = _validSegmentStates[_stateIndex];
+            Object.Destroy(_ghost);
+            _ghost = _factory.SegmentToGameObject(_validSegmentStates[_stateIndex]);
         }
     }
 }

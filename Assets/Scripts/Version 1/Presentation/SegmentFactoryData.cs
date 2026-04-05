@@ -1,4 +1,6 @@
 using UnityEngine;
+using Version_1.Domain;
+using Version_1.Utility;
 
 namespace Version_1.Presentation
 {
@@ -7,7 +9,7 @@ namespace Version_1.Presentation
     {
         public GameObject Cube;
         public GameObject Socket;
-        public Material Material;
+        public SerializedDictionary<Archetype,Material> Materials;
         public MonoSocket MonoSocket;
     }
 }
