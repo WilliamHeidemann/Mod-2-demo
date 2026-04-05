@@ -17,7 +17,7 @@ namespace Version_1.Presentation
             
             Factory factory = new(_factoryData);
             Builder builder = new(interactions, factory);
-            Segment initial = Generator.CenterCube;
+            Segment initial = Generator.Square;
             builder.Select(initial);
             builder.TryBuild(Position.Center);
         }

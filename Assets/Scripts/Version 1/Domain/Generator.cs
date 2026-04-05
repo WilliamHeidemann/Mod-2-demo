@@ -29,6 +29,31 @@ namespace Version_1.Domain
             Pivot = Position.Center
         };
 
+        public static Segment Square => new()
+        {
+            Positions = new[]
+            {
+                new Position(-1, 0, -1),
+                new Position(0, 0, -1),
+                new Position(1, 0, -1),
+
+                new Position(-1, 0, 0),
+                new Position(1, 0, 0),
+
+                new Position(-1, 0, 1),
+                new Position(0, 0, 1),
+                new Position(1, 0, 1)
+            },
+            Sockets =  new[]
+            {
+                new Socket(new Position(-1, 0, -1), Direction.Up, Archetype.Blue),
+                new Socket(new Position(1, 0, -1), Direction.Up, Archetype.Red),
+                new Socket(new Position(-1, 0, 1), Direction.Up, Archetype.Yellow),
+                new Socket(new Position(1, 0, 1), Direction.Up, Archetype.Green),
+            },
+            Pivot = Position.Center
+        };
+
         public static Segment Generate()
         {
             HashSet<Position> positions = new();
