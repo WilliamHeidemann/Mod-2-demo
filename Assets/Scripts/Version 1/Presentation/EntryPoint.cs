@@ -7,13 +7,11 @@ namespace Version_1.Presentation
     {
         [SerializeField] private RayCaster _rayCaster;
         [SerializeField] private SegmentFactoryData _factoryData;
-        [SerializeField] private Camera _camera;
         [SerializeField] private RotationInputReader _rotationInputReader;
         
         private void Awake()
         {
             Interactions interactions = new();
-            // CameraPositioner cameraPositioner = new(_camera.transform, interactions);
             _rotationInputReader.Initialize(interactions);
             _rayCaster.Initialize(interactions);
             

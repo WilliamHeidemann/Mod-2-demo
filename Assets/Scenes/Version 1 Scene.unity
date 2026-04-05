@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   _orbitSpeed: 100
   _zoomSpeed: 10
+  _elevationSpeed: 5
 --- !u!1 &197875661
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +362,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Presentation::Version_1.Presentation.EntryPoint
   _rayCaster: {fileID: 197875662}
   _factoryData: {fileID: 11400000, guid: 76d3a924e27ee40f084fc299a45f67b1, type: 2}
-  _camera: {fileID: 8950342}
   _rotationInputReader: {fileID: 1508969410}
 --- !u!1 &541654336
 GameObject:
