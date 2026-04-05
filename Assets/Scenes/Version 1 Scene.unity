@@ -155,8 +155,8 @@ Camera:
   m_GameObject: {fileID: 8950340}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.19215688, g: 0.4745098, b: 0.44214827, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -179,7 +179,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 30
   orthographic: 0
   orthographic size: 2
   m_Depth: -1
@@ -285,7 +285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405ea8bd78214ea0a802a2e2231d7905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Presentation::Version_1.Presentation.RayCaster
-  _segmentManager: {fileID: 417548655}
 --- !u!4 &197875663
 Transform:
   m_ObjectHideFlags: 0
@@ -325,13 +324,36 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 417548654}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0415340cae8a4529a05381f8093bf872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Presentation::Version_1.Presentation.SegmentManager
-  _monoSegment: {fileID: 6196442274671273055, guid: 451de68f4884a4caabac1bf588fbb7a9, type: 3}
   _instantiator: {fileID: 11400000, guid: 04a37db7cb359450d950303ec412b542, type: 2}
+  _segmentPresentation: {fileID: 0}
+  _rotation: {x: 0, y: 0, z: 0, w: 1}
+  _juiceCurve:
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _duration: 0.5
 --- !u!4 &417548656
 Transform:
   m_ObjectHideFlags: 0
@@ -347,6 +369,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &463922023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 463922024}
+  - component: {fileID: 463922025}
+  m_Layer: 0
+  m_Name: Entry Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &463922024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463922023}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &463922025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463922023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b9557815a94560a246eaa4e520217e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Presentation::Version_1.Presentation.EntryPoint
+  _rayCaster: {fileID: 197875662}
+  _factoryData: {fileID: 11400000, guid: 76d3a924e27ee40f084fc299a45f67b1, type: 2}
 --- !u!1 &541654336
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,3 +550,4 @@ SceneRoots:
   - {fileID: 541654338}
   - {fileID: 197875663}
   - {fileID: 417548656}
+  - {fileID: 463922024}

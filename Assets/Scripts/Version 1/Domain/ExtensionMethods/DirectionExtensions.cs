@@ -6,7 +6,7 @@ namespace Version_1
     {
         public static Direction Rotate(this Direction direction, Axis axis)
         {
-            var rotatedDirection = direction.Value.Rotate(axis);
+            Position rotatedDirection = direction.Value.Rotate(axis);
             return rotatedDirection.AsDirection();
         }
 

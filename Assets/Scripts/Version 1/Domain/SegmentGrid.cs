@@ -12,9 +12,9 @@ namespace Version_1
 
         public IEnumerable<Position> GetOccupiedPositions()
         {
-            foreach (var segment in _segments)
+            foreach (Segment segment in _segments)
             {
-                foreach (var cellPosition in segment.Positions)
+                foreach (Position cellPosition in segment.Positions)
                 {
                     yield return cellPosition;
                 }
@@ -23,30 +23,38 @@ namespace Version_1
 
         public IEnumerable<Socket> GetSockets()
         {
-            foreach (var segment in _segments)
+            foreach (Segment segment in _segments)
             {
-                foreach (var socket in segment.Sockets)
+                foreach (Socket socket in segment.Sockets)
                 {
                     yield return socket;
                 }
             }
         }
 
-        /// expects a segment in world position
-        public void Add(Segment segment, bool forceAdd = false)
+        /// Expects a segment in world position.
+        public bool TryAdd(Segment segment)
         {
-            if (forceAdd || Fits(segment))
+            if (Fits(segment))
             {
                 _segments.Add(segment);
+                return true;
             }
+
+            return false;
         }
 
-        /// expects a segment in world position
+        /// Expects a segment in world position.
         public bool Fits(Segment segment)
         {
-            var occupiedPositions = GetOccupiedPositions().ToHashSet();
+            if (_segments.Count == 0)
+            {
+                return true;
+            }
+            
+            HashSet<Position> occupiedPositions = GetOccupiedPositions().ToHashSet();
 
-            foreach (var position in segment.Positions)
+            foreach (Position position in segment.Positions)
             {
                 if (occupiedPositions.Contains(position))
                 {
@@ -55,11 +63,11 @@ namespace Version_1
                 }
             }
 
-            var existingSockets = GetSockets().ToArray();
+            Socket[] existingSockets = GetSockets().ToArray();
 
-            foreach (var socket in segment.Sockets)
+            foreach (Socket socket in segment.Sockets)
             {
-                foreach (var other in existingSockets)
+                foreach (Socket other in existingSockets)
                 {
                     if (socket.ConnectsTo(other))
                         return true; // just one socket needs to connect

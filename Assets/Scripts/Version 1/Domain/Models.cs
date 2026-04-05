@@ -17,6 +17,7 @@ namespace Version_1
     {
         public static Position operator +(Position a, Position b) =>
             new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+
         public static Position operator -(Position a, Position b) =>
             new(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
 
@@ -34,15 +35,10 @@ namespace Version_1
 
         public static implicit operator Position(Direction direction) => direction.Value;
 
-        public static Position operator *(Direction direction, int multiplier)
-        {
-            Position position = Position.Center;
-            for (int i = 0; i < multiplier; i++)
-            {
-                position += direction;
-            }
-            return position;
-        }
+        public static Position operator *(Direction direction, int multiplier) => new(
+            direction.Value.X * multiplier,
+            direction.Value.Y * multiplier,
+            direction.Value.Z * multiplier);
 
         public static readonly Direction Up = new(0, 1, 0);
         public static readonly Direction Down = new(0, -1, 0);
@@ -62,7 +58,7 @@ namespace Version_1
         Green,
         Yellow,
     }
-    
+
     public enum Axis
     {
         X,

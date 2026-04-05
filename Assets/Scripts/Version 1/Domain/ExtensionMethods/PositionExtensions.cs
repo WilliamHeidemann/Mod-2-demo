@@ -7,25 +7,25 @@ namespace Version_1
 {
     public static class PositionExtensions
     {
-        public static Position Rotate(this Position p, Axis axis)
+        public static Position Rotate(this Position position, Axis axis)
             => axis switch
             {
-                Axis.X => new Position(p.X, p.Z, -p.Y),
-                Axis.Y => new Position(-p.Z, p.Y, p.X),
-                Axis.Z => new Position(p.Y, -p.X, p.Z),
+                Axis.X => new Position(position.X, position.Z, -position.Y),
+                Axis.Y => new Position(-position.Z, position.Y, position.X),
+                Axis.Z => new Position(position.Y, -position.X, position.Z),
                 _ => throw new ArgumentOutOfRangeException(nameof(axis))
             };
 
-        public static Position RotateAround(this Position p, Position pivot, Axis axis)
+        public static Position RotateAround(this Position position, Position pivot, Axis axis)
         {
             // move to origin
-            var translated = new Position(
-                p.X - pivot.X,
-                p.Y - pivot.Y,
-                p.Z - pivot.Z);
+            Position translated = new Position(
+                position.X - pivot.X,
+                position.Y - pivot.Y,
+                position.Z - pivot.Z);
 
             // rotate
-            var rotated = translated.Rotate(axis);
+            Position rotated = translated.Rotate(axis);
 
             // move back
             return new Position(
@@ -34,16 +34,11 @@ namespace Version_1
                 rotated.Z + pivot.Z);
         }
 
-        public static bool IsNextTo(this Position a, Position b)
-        {
-            return
-                Mathf.Abs(a.X - b.X)
-                + Mathf.Abs(a.Y - b.Y)
-                + Mathf.Abs(a.Z - b.Z)
-                == 1;
-        }
+        public static bool IsNextTo(this Position a, Position b) =>
+            Mathf.Abs(a.X - b.X) + Mathf.Abs(a.Y - b.Y) + Mathf.Abs(a.Z - b.Z) == 1;
 
-        public static IEnumerable<(Position First, Position Second)> PairsOfNeighbors(this IEnumerable<Position> positions) =>
+        public static IEnumerable<(Position First, Position Second)> PairsOfNeighbors(
+            this IEnumerable<Position> positions) => 
             positions.Pairs((a, b) => a.IsNextTo(b));
     }
 }

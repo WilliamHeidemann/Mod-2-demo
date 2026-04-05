@@ -4,37 +4,46 @@ using UnityEngine.InputSystem;
 
 namespace Version_1.Presentation
 {
-    public class RayCaster : MonoSegment
+    public class RayCaster : MonoBehaviour
     {
         private Camera _camera;
-        [SerializeField] private SegmentManager _segmentManager;
-        
-        private void Awake()
+        private Interactions _interactions;
+        private Position _lastHover;
+        private bool _isHovering;
+
+        public void Initialize(Interactions interactions)
         {
             _camera = Camera.main;
+            _interactions = interactions;
         }
-        
+
         private void LateUpdate()
         {
-            var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            
-            if (Physics.Raycast(ray, out var hit))
+            Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                var position = ToPosition(hit.collider.bounds.center);
-                _segmentManager.SocketHovered(position);
+                Position position = hit.collider.bounds.center.ToPosition();
+                if (position != _lastHover || !_isHovering)
+                {
+                    _interactions.OnHoverEnter?.Invoke(position);
+                    _lastHover = position;
+                    _isHovering = true;
+                }
 
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
-                    _segmentManager.TryBuild(position);
+                    _interactions.OnTryBuild?.Invoke(position);
                 }
             }
             else
             {
-                _segmentManager.SocketUnHovered();
+                if (_isHovering)
+                {
+                    _interactions.OnHoverExit?.Invoke();
+                    _isHovering = false;
+                }
             }
         }
-
-        private Position ToPosition(Vector3 position) => 
-            new(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), Mathf.RoundToInt(position.z));
     }
 }
