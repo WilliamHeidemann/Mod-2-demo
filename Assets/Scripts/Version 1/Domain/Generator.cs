@@ -7,38 +7,26 @@ namespace Version_1.Domain
 {
     public static class Generator
     {
-        public static Segment GenerateBox()
+        public static Segment CenterCube => new()
         {
-            return new Segment
-            {
-                Positions = new[] { Position.Center },
-                Sockets = new Socket[]
-                {
-                    new(Position.Center, Direction.Up, Archetype.Blue),
-                    new(Position.Center, Direction.Down, Archetype.Blue),
-                    new(Position.Center, Direction.Right, Archetype.Blue),
-                    new(Position.Center, Direction.Left, Archetype.Blue),
-                    new(Position.Center, Direction.Front, Archetype.Blue),
-                    new(Position.Center, Direction.Back, Archetype.Blue),
-                },
-            };
-        }
+            Positions = new[] { Position.Center },
+            Sockets = new[] { new Socket(Position.Center, Direction.Up, Archetype.Blue) },
+            Pivot = Position.Center
+        };
 
-        public static Segment GenerateStick()
+        public static Segment Stick => new()
         {
-            return new()
+            Positions = new[]
             {
-                Positions = new[]
-                {
-                    Position.Center,
-                    Position.Center + Direction.Right
-                },
-                Sockets = new[]
-                {
-                    new Socket(Position.Center + Direction.Right, Direction.Up, Archetype.Blue)
-                }
-            };
-        }
+                Position.Center,
+                Position.Center + Direction.Right
+            },
+            Sockets = new[]
+            {
+                new Socket(Position.Center + Direction.Right, Direction.Up, Archetype.Blue)
+            },
+            Pivot = Position.Center
+        };
 
         public static Segment Generate()
         {
@@ -46,7 +34,7 @@ namespace Version_1.Domain
             Position current = new(0, 0, 0);
 
             positions.Add(current);
-            int numberOfCells = Random.Range(1, 3);
+            int numberOfCells = Random.Range(1, 5);
 
             for (int i = 0; i < numberOfCells; i++)
             {

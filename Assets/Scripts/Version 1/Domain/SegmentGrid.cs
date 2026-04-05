@@ -58,7 +58,6 @@ namespace Version_1
             {
                 if (occupiedPositions.Contains(position))
                 {
-                    // Debug.LogWarning($"Segment has already been occupied by {position}");
                     return false;
                 }
             }
@@ -74,7 +73,6 @@ namespace Version_1
                 }
             }
             
-            // Debug.LogWarning($"No sockets found for {segment}");
             return false;
         }
     }

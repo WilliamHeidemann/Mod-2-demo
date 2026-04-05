@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using LitMotion;
 using UnityEngine;
 using Version_1.Domain;
@@ -52,12 +54,25 @@ namespace Version_1.Presentation
             }
             
             _ghost.SetActive(true);
-
-            LMotion
-                .Create(_ghost.transform.position, position.ToVector3(), .3f)
-                .WithEase(Ease.OutExpo)
-                .BindToPosition(_ghost.transform);
-            // _ghost.transform.position = position.ToVector3();
+            
+            Segment translatedSegment = _current.Translate(position);
+            List<Segment> validSegments = translatedSegment.GetAllStates().Where(_grid.Fits).ToList();
+            if (validSegments.Count > 0)
+            {
+                Segment validSegment = validSegments[0];
+                _current = validSegment;//.Translate(-position);
+                Object.Destroy(_ghost);
+                _ghost = _factory.SegmentToGameObject(validSegment);
+                
+                LMotion
+                    .Create(_ghost.transform.position, position.ToVector3(), .3f)
+                    .WithEase(Ease.OutExpo)
+                    .BindToPosition(_ghost.transform);
+            }
+            else
+            {
+                Debug.LogWarning("No valid rotations found.");
+            }
         }
         
         private void RemoveHover()
