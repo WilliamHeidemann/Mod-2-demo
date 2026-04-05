@@ -1,5 +1,7 @@
+using LitMotion;
 using UnityEngine;
 using Version_1.Domain;
+using LitMotion.Extensions;
 
 namespace Version_1.Presentation
 {
@@ -50,7 +52,12 @@ namespace Version_1.Presentation
             }
             
             _ghost.SetActive(true);
-            _ghost.transform.position = position.ToVector3();
+
+            LMotion
+                .Create(_ghost.transform.position, position.ToVector3(), .3f)
+                .WithEase(Ease.OutExpo)
+                .BindToPosition(_ghost.transform);
+            // _ghost.transform.position = position.ToVector3();
         }
         
         private void RemoveHover()
@@ -60,7 +67,7 @@ namespace Version_1.Presentation
                 return;
             }
             
-            _ghost.SetActive(false);
+            // _ghost.SetActive(false);
         }
     }
 }

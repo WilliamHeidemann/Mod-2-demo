@@ -8,14 +8,12 @@ namespace Version_1.Presentation
     {
         [SerializeField] private RayCaster _rayCaster;
         [SerializeField] private SegmentFactoryData _factoryData;
+        [SerializeField] private Camera _camera;
         
         private void Awake()
         {
             Interactions interactions = new();
-            // interactions.OnHoverEnter += _ => print("Hover Enter");
-            // interactions.OnHoverExit += () => print("Hover Exit");
-            // interactions.OnTryBuild += _ => print("Try Build");
-            
+            // CameraPositioner cameraPositioner = new(_camera.transform, interactions);
             
             _rayCaster.Initialize(interactions);
             Factory factory = new(_factoryData);
