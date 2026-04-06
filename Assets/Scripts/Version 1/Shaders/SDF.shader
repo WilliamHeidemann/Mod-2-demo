@@ -3,7 +3,7 @@ Shader "Custom/SDFSpherePass_VertexID"
     Properties
     {
         _Radius ("Sphere Radius", Range(0, 1)) = 0.5
-        _SphereColor ("Sphere Color", Color) = (1,1,1,1)
+        _Color ("Color", Color) = (1,1,1,1)
         _Ambient("Ambient Intensity", Range(0, 1)) = 0.2
         _Smoothness("Smooth Blend", Range(0, 1)) = 0.1
         _Size ("Size", Range(0, 1)) = 0.5
@@ -39,7 +39,7 @@ Shader "Custom/SDFSpherePass_VertexID"
             };
 
             float _Radius;
-            float4 _SphereColor;
+            float4 _Color;
             float _Ambient;
             float _Smoothness;
             float _Size;
@@ -47,6 +47,9 @@ Shader "Custom/SDFSpherePass_VertexID"
             StructuredBuffer<float4> _PositionsBuffer;
             int _PositionsCount;
 
+            StructuredBuffer<float4> _SocketsBuffer;
+            int _SocketsCount;
+            
             // Simple SDF for a sphere
             float sdSphere(float3 position, float radius)
             {
@@ -72,8 +75,12 @@ Shader "Custom/SDFSpherePass_VertexID"
                 float minDist = 1000.0;
                 for (int i = 0; i < _PositionsCount; ++i)
                 {
-                    //minDist = smoothMin(minDist, sdSphere(p - _PositionBuffer[i].xyz, _Radius), _Smoothness);
                     minDist = smoothMin(minDist, sdCube(p - _PositionsBuffer[i].xyz, size), _Smoothness);
+                }
+
+                for (int i = 0; i < _SocketsCount; ++i)
+                {
+                    minDist = smoothMin(minDist, sdSphere(p - _SocketsBuffer[i].xyz, _Radius), _Smoothness);
                 }
  
                 return minDist;
@@ -133,7 +140,7 @@ Shader "Custom/SDFSpherePass_VertexID"
 
                         // Shading
                         float diffuse = saturate(dot(normal, mainLight.direction));
-                        float3 color = _SphereColor.rgb * (diffuse + _Ambient);
+                        float3 color = _Color.rgb * (diffuse + _Ambient);
 
                         return float4(color, 1.0);
                     }

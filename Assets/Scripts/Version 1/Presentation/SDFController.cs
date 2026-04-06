@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UtilityToolkit.Editor;
 
 namespace Version_1.Presentation
 {
@@ -8,35 +10,14 @@ namespace Version_1.Presentation
     {
         private static readonly int PositionsBuffer = Shader.PropertyToID("_PositionsBuffer");
         private static readonly int PositionsCount = Shader.PropertyToID("_PositionsCount");
+        private static readonly int SocketsBuffer = Shader.PropertyToID("_SocketsBuffer");
+        private static readonly int SocketsCount = Shader.PropertyToID("_SocketsCount");
         [SerializeField] private Material _material;
         [SerializeField] private Vector4[] _positions;
+        [SerializeField] private Vector4[] _sockets;
         private ComputeBuffer _positionsBuffer;
-
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        // private void Start()
-        // {
-        //     // 1. Initialize the buffer: (number of elements, size of one element in bytes)
-        //     // Vector4 = 4 floats * 4 bytes = 16 bytes
-        //     _positionsBuffer = new ComputeBuffer(_positions.Length, 4 * sizeof(float));
-        //
-        //     // 2. Upload data to GPU
-        //     _positionsBuffer.SetData(_positions);
-        //
-        //     // 3. Bind the buffer to the material
-        //     _material.SetBuffer(PositionsBuffer, _positionsBuffer);
-        //
-        //     // 4. Tell the shader how many items are in the buffer
-        //     _material.SetInt(PositionsCount, _positions.Length);
-        // }
-
-        // Update is called once per frame
-        // private void Update()
-        // {
-        //     _positionsBuffer.SetData(_positions);
-        //     _material.SetInt(PositionsCount, _positions.Length);
-        //     _material.SetBuffer(PositionsBuffer, _positionsBuffer);
-        // }
-
+        private ComputeBuffer _socketsBuffer;
+        
         private void OnDestroy()
         {
             // CRITICAL: Buffers are not garbage collected. You must release them manually!
@@ -44,7 +25,7 @@ namespace Version_1.Presentation
             _material.SetInt(PositionsCount, 0);
         }
 
-        public void Append(Vector4[] positions)
+        public void AppendPositions(Vector4[] positions)
         {
             Vector4[] temp = new Vector4[_positions.Length + positions.Length];
             for (int i = 0; i < _positions.Length; i++)
@@ -67,6 +48,38 @@ namespace Version_1.Presentation
             _positionsBuffer.SetData(_positions);
             _material.SetBuffer(PositionsBuffer, _positionsBuffer);
             _material.SetInt(PositionsCount, _positions.Length);
+        }
+
+        public void AppendSockets(Vector4[] sockets)
+        {
+            Vector4[] temp = new Vector4[_sockets.Length + sockets.Length];
+            for (int i = 0; i < _sockets.Length; i++)
+            {
+                temp[i] = _sockets[i];
+            }
+
+            for (int i = 0; i < sockets.Length; i++)
+            {
+                temp[i + _sockets.Length] = sockets[i];
+            }
+
+            _sockets = new Vector4[temp.Length];
+            for (int i = 0; i < temp.Length; i++)
+            {
+                _sockets[i] = temp[i];
+            }
+
+            _socketsBuffer = new ComputeBuffer(temp.Length, 4 * sizeof(float));
+            _socketsBuffer.SetData(_sockets);
+            _material.SetBuffer(SocketsBuffer, _socketsBuffer);
+            _material.SetInt(SocketsCount, _sockets.Length);
+        }
+
+        [Button]
+        public void UpdatePositions()
+        {
+            AppendPositions(Array.Empty<Vector4>());
+            AppendSockets(Array.Empty<Vector4>());
         }
     }
 }

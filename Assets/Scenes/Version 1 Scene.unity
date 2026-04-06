@@ -582,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   _material: {fileID: 2100000, guid: 406f63c2a90db4f22a6a6d293246da57, type: 2}
   _positions: []
+  _sockets: []
 --- !u!1 &1508969408
 GameObject:
   m_ObjectHideFlags: 0

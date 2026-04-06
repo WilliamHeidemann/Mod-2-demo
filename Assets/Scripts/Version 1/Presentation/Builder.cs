@@ -46,7 +46,10 @@ namespace Version_1.Presentation
                 _ghost.SetActive(true);
                 BuildSockets(translatedSegment);
                 Select(Generator.Generate());
-                _sdfController.Append(translatedSegment.Positions.Select(p => p.ToVector4()).ToArray());
+                _sdfController.AppendPositions(translatedSegment.Positions.Select(p => p.ToVector4()).ToArray());
+                _sdfController.AppendSockets(translatedSegment.Sockets
+                    .Select(s => s.Position.ToVector4() + s.Direction.Value.ToVector4() / 2f)
+                    .ToArray());
             }
         }
 
