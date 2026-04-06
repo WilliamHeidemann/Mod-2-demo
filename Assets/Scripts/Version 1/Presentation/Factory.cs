@@ -29,9 +29,8 @@ namespace Version_1.Presentation
                 Object.Instantiate(_cube, position.ToVector3(), Quaternion.identity, gameObject.transform);
             }
 
-            foreach ((Position a, Position b) in segment.Positions.PairsOfNeighbors())
+            foreach (Vector3 halfwayPoint in segment.Positions.PairsOfNeighbors().HalfwayPoints())
             {
-                Vector3 halfwayPoint = (a.ToVector3() + b.ToVector3()) / 2f;
                 Object.Instantiate(_cube, halfwayPoint, Quaternion.identity, gameObject.transform);
             }
             

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Version_1.Domain;
 
@@ -18,6 +19,14 @@ namespace Version_1.Presentation
         public static Vector3Int ToVector3Int(this Vector3 vector3) =>
             new(Mathf.RoundToInt(vector3.x), Mathf.RoundToInt(vector3.y), Mathf.RoundToInt(vector3.z));
 
+        public static IEnumerable<Vector3> HalfwayPoints(this IEnumerable<(Position, Position)> pairs)
+        {
+            foreach ((Position a, Position b) in pairs)
+            { 
+                yield return (a.ToVector3() + b.ToVector3()) / 2f;
+            }
+        }
+        
         public static Color AsColor(this Archetype archetype)
         {
             return archetype switch

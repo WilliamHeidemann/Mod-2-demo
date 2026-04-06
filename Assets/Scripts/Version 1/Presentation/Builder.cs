@@ -46,7 +46,18 @@ namespace Version_1.Presentation
                 _ghost.SetActive(true);
                 BuildSockets(translatedSegment);
                 Select(Generator.Generate());
-                _sdfController.AppendPositions(translatedSegment.Positions.Select(p => p.ToVector4()).ToArray());
+
+                IEnumerable<Vector4> positions = translatedSegment.Positions
+                    .Select(p => p.ToVector4());
+                
+                IEnumerable<Vector4> halfwayPoints = translatedSegment.Positions
+                    .PairsOfNeighbors()
+                    .HalfwayPoints()
+                    .Select(v3 => new Vector4(v3.x, v3.y, v3.z));
+                
+                Vector4[] cubePositions = positions.Concat(halfwayPoints).ToArray();
+                
+                _sdfController.AppendPositions(cubePositions);
                 _sdfController.AppendSockets(translatedSegment.Sockets
                     .Select(s => s.Position.ToVector4() + s.Direction.Value.ToVector4() / 2f)
                     .ToArray());

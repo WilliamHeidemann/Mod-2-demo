@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Version_1.Utility;
 
@@ -38,7 +39,20 @@ namespace Version_1.Domain.ExtensionMethods
             Mathf.Abs(a.X - b.X) + Mathf.Abs(a.Y - b.Y) + Mathf.Abs(a.Z - b.Z) == 1;
 
         public static IEnumerable<(Position First, Position Second)> PairsOfNeighbors(
-            this IEnumerable<Position> positions) => 
-            positions.Pairs((a, b) => a.IsNextTo(b));
+            this IEnumerable<Position> positions)
+        {
+            List<Position> list = positions.ToList();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                for (int j = i + 1; j < list.Count; j++)
+                {
+                    if (list[i].IsNextTo(list[j]))
+                    {
+                        yield return (list[i], list[j]);
+                    }
+                }
+            }
+        }
     }
 }
