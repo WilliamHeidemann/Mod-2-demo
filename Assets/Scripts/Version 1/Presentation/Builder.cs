@@ -18,11 +18,13 @@ namespace Version_1.Presentation
         private Segment[] _validSegmentStates;
         private int _stateIndex;
         private GameObject _ghost;
+        private readonly SDFController _sdfController;
         
-        public Builder(Interactions interactions, Factory factory)
+        public Builder(Interactions interactions, Factory factory, SDFController sdfController)
         {
             _factory = factory;
-            
+            _sdfController = sdfController;
+
             interactions.OnHoverEnter += SetHover;
             interactions.OnHoverExit += RemoveHover;
             interactions.OnTryBuild += TryBuild;
@@ -44,6 +46,7 @@ namespace Version_1.Presentation
                 _ghost.SetActive(true);
                 BuildSockets(translatedSegment);
                 Select(Generator.Generate());
+                _sdfController.Append(translatedSegment.Positions.Select(p => p.ToVector4()).ToArray());
             }
         }
 

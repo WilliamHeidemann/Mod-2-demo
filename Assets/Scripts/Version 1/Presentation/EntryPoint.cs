@@ -8,6 +8,7 @@ namespace Version_1.Presentation
         [SerializeField] private RayCaster _rayCaster;
         [SerializeField] private SegmentFactoryData _factoryData;
         [SerializeField] private RotationInputReader _rotationInputReader;
+        [SerializeField] private SDFController _sdfController;
         
         private void Awake()
         {
@@ -16,7 +17,7 @@ namespace Version_1.Presentation
             _rayCaster.Initialize(interactions);
             
             Factory factory = new(_factoryData);
-            Builder builder = new(interactions, factory);
+            Builder builder = new(interactions, factory, _sdfController);
             Segment initial = Generator.Square;
             builder.Select(initial);
             builder.TryBuild(Position.Center);

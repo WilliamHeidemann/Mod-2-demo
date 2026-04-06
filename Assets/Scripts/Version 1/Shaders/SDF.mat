@@ -27,7 +27,7 @@ Material:
     m_Floats:
     - _Ambient: 0.2
     - _Radius: 0.56
-    - _Size: 0.35
+    - _Size: 0.3
     - _Smoothness: 0.62
     m_Colors:
     - _BaseColor: {r: 1, g: 0, b: 0, a: 1}

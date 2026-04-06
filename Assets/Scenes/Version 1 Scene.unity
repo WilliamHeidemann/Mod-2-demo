@@ -363,6 +363,7 @@ MonoBehaviour:
   _rayCaster: {fileID: 197875662}
   _factoryData: {fileID: 11400000, guid: 76d3a924e27ee40f084fc299a45f67b1, type: 2}
   _rotationInputReader: {fileID: 1508969410}
+  _sdfController: {fileID: 1194452507}
 --- !u!1 &541654336
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,10 +581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _material: {fileID: 2100000, guid: 406f63c2a90db4f22a6a6d293246da57, type: 2}
-  _positions:
-  - {x: -1, y: 0, z: 0, w: 0}
-  - {x: 0, y: 1, z: 0, w: 0}
-  - {x: 1, y: 0, z: 0, w: 0}
+  _positions: []
 --- !u!1 &1508969408
 GameObject:
   m_ObjectHideFlags: 0

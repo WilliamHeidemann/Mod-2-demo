@@ -8,6 +8,9 @@ namespace Version_1.Presentation
     {
         public static Vector3 ToVector3(this Position position) =>
             new(position.X, position.Y, position.Z);
+        
+        public static Vector4 ToVector4(this Position position) =>
+            new(position.X, position.Y, position.Z, 0);
 
         public static Position ToPosition(this Vector3 vector3) =>
             new(Mathf.RoundToInt(vector3.x), Mathf.RoundToInt(vector3.y), Mathf.RoundToInt(vector3.z));
