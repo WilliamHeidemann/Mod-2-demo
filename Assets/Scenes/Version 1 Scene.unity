@@ -206,13 +206,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8950340}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24477682, y: -0.39361888, z: 0.10955836, w: 0.87928694}
+  m_LocalRotation: {x: 0.24776603, y: -0.36866528, z: 0.102628045, w: 0.89003676}
   m_LocalPosition: {x: 7.27, y: 5.88, z: -6.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 31.112, y: -45, z: 0}
 --- !u!114 &8950344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,6 +535,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _segmentFactoryData: {fileID: 11400000, guid: 76d3a924e27ee40f084fc299a45f67b1, type: 2}
+--- !u!1 &1194452505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1194452506}
+  - component: {fileID: 1194452507}
+  m_Layer: 0
+  m_Name: SDF Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1194452506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194452505}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1194452507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194452505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d941bd372297e4f2ea1dc1d9444e0866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _material: {fileID: 2100000, guid: 406f63c2a90db4f22a6a6d293246da57, type: 2}
+  _positions:
+  - {x: -1, y: 0, z: 0, w: 0}
+  - {x: 0, y: 1, z: 0, w: 0}
+  - {x: 1, y: 0, z: 0, w: 0}
 --- !u!1 &1508969408
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,3 +638,4 @@ SceneRoots:
   - {fileID: 463922024}
   - {fileID: 792199097}
   - {fileID: 1508969409}
+  - {fileID: 1194452506}
